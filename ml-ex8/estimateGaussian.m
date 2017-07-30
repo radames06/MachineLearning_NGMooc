@@ -21,7 +21,9 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
+mu = sum(X) / m;
+sigma2 = (X - mu).*(X - mu);
+sigma2 = sum(sigma2) / m;
 
 
 

@@ -40,20 +40,29 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Calculation using loops :
+%for i = 1:num_movies
+%  for j = 1:num_users
+%    if R(i,j) == 1
+%      tmp = Theta(j,:) * X(i,:)' - Y(i,j);
+%      J = J + (tmp)^2 / 2;
+      %fprintf("i: %f  j: %f  Y: %f  R: %f\n", i, j, tmp, Y(i,j), R(i,j));
+      %tmp
+      %fprintf("\n");
+%    end
+%  end
+%end
 
+% Vectorized calculation :
+tmp = ((Theta * X') - Y').*R';
+J = sum(sum(tmp.^2)) / 2;
 
+% Regularization :
+J = J + sum(sum(Theta.^2)) * lambda / 2;
+J = J + sum(sum(X.^2)) * lambda / 2;
 
-
-
-
-
-
-
-
-
-
-
-
+X_grad = tmp' * Theta + lambda * X;
+Theta_grad = tmp * X + lambda * Theta;
 
 % =============================================================
 
